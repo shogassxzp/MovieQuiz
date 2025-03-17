@@ -28,8 +28,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="BPl-55-fb7">
                                 <rect key="frame" x="16" y="46" width="350" height="753"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleAspectFit" spacing="233" translatesAutoresizingMaskIntoConstraints="NO" id="Yyw-dZ-t0q">
-                                        <rect key="frame" x="0.0" y="0.0" width="340.66666666666669" height="23.666666666666668"/>
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" spacing="223" translatesAutoresizingMaskIntoConstraints="NO" id="Yyw-dZ-t0q">
+                                        <rect key="frame" x="0.0" y="0.0" width="338.33333333333331" height="23.666666666666668"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Вопрос:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHd-yE-N5G" userLabel="Question Title Label">
                                                 <rect key="frame" x="0.0" y="0.0" width="71.666666666666671" height="23.666666666666668"/>
@@ -37,8 +37,8 @@
                                                 <color key="textColor" name="YP White"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="1/10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0K-Uh-98Z" userLabel="Index Label">
-                                                <rect key="frame" x="304.66666666666669" y="0.0" width="36" height="23.666666666666668"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="  1/10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0K-Uh-98Z" userLabel="Index Label">
+                                                <rect key="frame" x="294.66666666666669" y="0.0" width="43.666666666666686" height="23.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="20"/>
                                                 <color key="textColor" name="YP White"/>
                                                 <nil key="highlightedColor"/>
