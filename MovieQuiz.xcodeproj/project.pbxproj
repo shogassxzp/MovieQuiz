@@ -76,7 +76,6 @@
 		1FC33B562DA2BD2B0044A085 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				1FB9C4F12DB91FBD00159F4D /* AlertPresenter.swift */,
 				1FC33B572DA2BD450044A085 /* QuestionFactory.swift */,
 				1FC33B5F2DA3DBFF0044A085 /* QuestionFactoryProtocol.swift */,
 				1F77EEBC2DB3B851002B2F6C /* QuestionFactoryDelegate.swift */,
@@ -100,6 +99,7 @@
 			children = (
 				AD1ABAB52831907B00B3E448 /* MovieQuizViewController.swift */,
 				AD1ABAB72831907B00B3E448 /* Main.storyboard */,
+				1FB9C4F12DB91FBD00159F4D /* AlertPresenter.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";

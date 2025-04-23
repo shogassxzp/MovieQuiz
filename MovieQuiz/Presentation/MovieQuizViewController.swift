@@ -6,6 +6,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var questionNuberLabel: UILabel!
     @IBOutlet private weak var posterImageView: UIImageView!
     
+    private var alertPresenter: AlertPresenter?
+    
     private var currentQuestionIndex = 0
     
     private var correctAnswers = 0
@@ -36,7 +38,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         
         questionFactory.requestNextQuestion()
     
-            
+        alertPresenter = AlertPresenter(viewController: self)
             
             posterImageView.layer.cornerRadius = 20
             posterImageView.layer.masksToBounds = true
@@ -50,22 +52,19 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             return questionStep
         }
         
-        private func show(quiz result: QuizResultsViewModel) {
-            let alert = UIAlertController(title: "Раунд завершён",
-                                          message: "Ваш результат \(correctAnswers)/10",
-                                          preferredStyle: .alert)
-            
-            let action = UIAlertAction(title: "Сыграть ещё раз", style: .default) { _ in
-                self.currentQuestionIndex = 0
-                self.correctAnswers = 0
-                
-                self.questionFactory?.requestNextQuestion()
+    private func show(quiz result: QuizResultsViewModel) {
+        let alertModel = AlertModel (
+            title: result.title,
+            message: result.text,
+            buttonText: result.buttonText,
+            completion:{ [weak self] in
+                self?.currentQuestionIndex = 0
+                self?.correctAnswers = 0
+                self?.questionFactory?.requestNextQuestion()
             }
-            
-            alert.addAction(action)
-            
-            self.present(alert, animated: true, completion: nil)
-        }
+        )
+        alertPresenter?.show(alertModel: alertModel)
+    }
         
         private func show(quiz step: QuizStep) {
             questionLabel.text = step.question
