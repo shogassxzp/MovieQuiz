@@ -16,6 +16,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     
+    private var statisticService: StatisticServiceProtocol = StatisticService()
+    
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
@@ -32,6 +34,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        statisticService = StatisticService()
+        
         let questionFactory = QuestionFactory()
             questionFactory.setup(delegate: self)
         self.questionFactory = questionFactory
@@ -53,18 +57,30 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
         
     private func show(quiz result: QuizResultsViewModel) {
-        let alertModel = AlertModel (
-            title: result.title,
-            message: result.text,
-            buttonText: result.buttonText,
-            completion:{ [weak self] in
-                self?.currentQuestionIndex = 0
-                self?.correctAnswers = 0
-                self?.questionFactory?.requestNextQuestion()
-            }
-        )
-        alertPresenter?.show(alertModel: alertModel)
-    }
+        
+        statisticService.store(correct: correctAnswers, total: questionsAmount)
+        
+        let formattedDate = statisticService.bestGame.date.dateTimeString
+        
+        let message = """
+            Ваш результат: \(correctAnswers)/\(questionsAmount)\n
+            Количество сыгранных квизов: \(statisticService.gamesCount)\n
+            Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(formattedDate))\n
+            Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%
+            """
+        
+        let alertModel = AlertModel(
+                title: result.title,
+                message: message,
+                buttonText: result.buttonText,
+                completion: { [weak self] in
+                    self?.currentQuestionIndex = 0
+                    self?.correctAnswers = 0
+                    self?.questionFactory?.requestNextQuestion()
+                }
+            )
+            alertPresenter?.show(alertModel: alertModel)
+        }
         
         private func show(quiz step: QuizStep) {
             questionLabel.text = step.question
