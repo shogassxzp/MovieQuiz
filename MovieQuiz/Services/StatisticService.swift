@@ -51,7 +51,7 @@ final class StatisticService: StatisticServiceProtocol {
             return storage.integer(forKey: Keys.gamesCount.rawValue)
         }
         set {
-            return storage.set(newValue, forKey: Keys.gamesCount.rawValue)
+            return storage.set(newValue,forKey: Keys.gamesCount.rawValue)
         }
     }
     
@@ -64,9 +64,9 @@ final class StatisticService: StatisticServiceProtocol {
             return GameResult(correct: correct, total: total, date: date)
         }
         set {
-            storage.set(newValue.correct , forKey: Keys.bestGameCorrect.rawValue)
-            storage.set(newValue.total , forKey: Keys.bestGameTotal.rawValue)
-            storage.set(newValue.date , forKey: Keys.bestGameDate.rawValue)
+            storage.set(newValue.correct, forKey: Keys.bestGameCorrect.rawValue)
+            storage.set(newValue.total, forKey: Keys.bestGameTotal.rawValue)
+            storage.set(newValue.date, forKey: Keys.bestGameDate.rawValue)
         }
     }
     
@@ -74,17 +74,11 @@ final class StatisticService: StatisticServiceProtocol {
         
         let currentGame = GameResult(correct: count, total: amount, date: Date())
         
-        var gamesCount = self.gamesCount
         gamesCount += 1
-        self.gamesCount = gamesCount
         
-        var correctAnswers = self.correctAnswers
         correctAnswers += count
-        self.correctAnswers = correctAnswers
         
-        var totalQuestions = self.totalQuestions
         totalQuestions += amount
-        self.totalQuestions = totalQuestions
         
         let bestGame = self.bestGame
         if currentGame.isBetterThen(bestGame) {

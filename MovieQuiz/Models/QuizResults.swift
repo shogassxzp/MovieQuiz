@@ -7,7 +7,7 @@
 
 import Foundation
 
- struct QuizResultsViewModel {
+ struct QuizResults {
     let title: String
     let text: String
     let buttonText: String
