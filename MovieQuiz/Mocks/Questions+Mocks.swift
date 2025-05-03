@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension QuizQuestion {
+/*extension QuizQuestion {
     static let mockQuestions: [QuizQuestion] = [
         QuizQuestion(image:"The Godfather", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: true),
         QuizQuestion(image:"The Ice Age Adventures of Buck Wild", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
@@ -20,3 +20,4 @@ extension QuizQuestion {
         QuizQuestion(image:"Old", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
         QuizQuestion(image:"Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false)]
 }
+*/
