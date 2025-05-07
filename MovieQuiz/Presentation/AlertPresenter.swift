@@ -8,8 +8,7 @@ final class AlertPresenter {
     }
     
     func show(alertModel: AlertModel) {
-        
-        let alert = UIAlertController (
+        let alert = UIAlertController(
             title: alertModel.title,
             message: alertModel.message,
             preferredStyle: .alert
@@ -18,8 +17,7 @@ final class AlertPresenter {
         let action = UIAlertAction(
             title: alertModel.buttonText,
             style: .default
-        )
-        {_ in
+        ) { _ in
             alertModel.completion()
         }
         alert.addAction(action)

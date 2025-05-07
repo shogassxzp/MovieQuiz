@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "6A95A956-60D7-4875-B63A-E089A9BEACA4",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:MovieQuiz.xcodeproj",
+        "identifier" : "1F64169C2DC79F5100D156FD",
+        "name" : "MovieQuizUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

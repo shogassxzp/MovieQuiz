@@ -8,7 +8,7 @@ class QuestionFactory: QuestionFactoryProtocol {
         self.delegate = delegate
     }
     
-    //private let questions: [QuizQuestion] = QuizQuestion.mockQuestions
+    // let questions: [QuizQuestion] = QuizQuestion.mockQuestions
     private var movies: [MostPopularMovie] = []
     
     func loadData() {
