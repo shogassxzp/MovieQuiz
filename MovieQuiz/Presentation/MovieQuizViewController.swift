@@ -15,12 +15,21 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         super.viewDidLoad()
 
         presenter = MovieQuizPresenter(viewController: self)
-
         alertPresenter = AlertPresenter(viewController: self)
 
         posterImageView.layer.cornerRadius = 20
         posterImageView.layer.masksToBounds = true
         showLoadingIndicator()
+    }
+    
+    func showLoadingIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+
+    func hideLoadingIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
 
     func updatePosterBorder(isCorrect: Bool) {
@@ -32,16 +41,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
 
     func clearPosterBorder() {
         posterImageView.layer.borderColor = UIColor.clear.cgColor
-    }
-
-    func showLoadingIndicator() {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-    }
-
-    func hideLoadingIndicator() {
-        activityIndicator.isHidden = true
-        activityIndicator.stopAnimating()
     }
 
     func showQuestion(step: QuizStep) {
@@ -57,7 +56,6 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
             title: result.title,
             message: message,
             buttonText: result.buttonText,
-            accessibilityIdentifier: "GameOverAlert",
             completion: { [weak self] in
                 self?.presenter.restartGame()
             }
@@ -90,8 +88,7 @@ final class MovieQuizViewController: UIViewController, MovieQuizViewControllerPr
         let model = AlertModel(
             title: "Ошибка",
             message: message,
-            buttonText: "Попробовать еще раз",
-            accessibilityIdentifier: "Network error") { [weak self] in
+            buttonText: "Попробовать еще раз") { [weak self] in
                 guard let self = self else { return }
 
                 self.presenter.restartGame()

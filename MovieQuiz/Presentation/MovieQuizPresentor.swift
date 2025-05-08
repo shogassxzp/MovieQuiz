@@ -8,8 +8,8 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     private var statisticService: StatisticServiceProtocol = StatisticService()
 
     private var correctAnswers: Int = 0
-    let questionsAmount: Int = 10
     private var currentQuestionIndex: Int = 0
+    let questionsAmount: Int = 10
 
     init(viewController: MovieQuizViewControllerProtocol) {
         self.viewController = viewController
@@ -25,15 +25,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     func resetCorrectAnswers() {
         correctAnswers = 0
     }
-
-    func convert(model: QuizQuestion) -> QuizStep {
-        return QuizStep(
-            image: UIImage(data: model.image) ?? UIImage(),
-            question: model.text,
-            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
-        )
-    }
-
+    
     func isLastQuestion() -> Bool {
         currentQuestionIndex == questionsAmount - 1
     }
@@ -52,6 +44,24 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         questionFactory?.requestNextQuestion()
     }
 
+    func convert(model: QuizQuestion) -> QuizStep {
+        return QuizStep(
+            image: UIImage(data: model.image) ?? UIImage(),
+            question: model.text,
+            questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)"
+        )
+    }
+    
+    func didLoadDataFromServer() {
+        viewController?.hideLoadingIndicator()
+        questionFactory?.requestNextQuestion()
+    }
+
+    func didFailToLoadData(with error: any Error) {
+        let message = error.localizedDescription
+        viewController?.showNetworkError(message: message)
+    }
+
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
             return
@@ -63,26 +73,6 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
     }
 
-    func didLoadDataFromServer() {
-        viewController?.hideLoadingIndicator()
-        questionFactory?.requestNextQuestion()
-    }
-
-    func didFailToLoadData(with error: any Error) {
-        let message = error.localizedDescription
-        viewController?.showNetworkError(message: message)
-    }
-
-    func makeResultsMessage() -> String {
-        let formattedDate = statisticService.bestGame.date.dateTimeString
-        return """
-        Ваш результат: \(getCorrectAnswers())/\(questionsAmount)
-        Количество сыгранных квизов: \(statisticService.gamesCount)
-        Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(formattedDate))
-        Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%
-        """
-    }
-
     func showNextQuestionOrResults() {
         if isLastQuestion() {
             let text = getCorrectAnswers() == questionsAmount ?
@@ -92,8 +82,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             let viewModel = QuizResults(
                 title: "Этот раунд окончен!",
                 text: text,
-                buttonText: "Сыграть ещё раз",
-                accessibilityIdentifier: "GameOverAlert")
+                buttonText: "Сыграть ещё раз")
             statisticService.store(correct: getCorrectAnswers(), total: questionsAmount)
             viewController?.clearPosterBorder()
             viewController?.showResults(result: viewModel)
@@ -102,6 +91,16 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
             switchToNextQuestion()
             questionFactory?.requestNextQuestion()
         }
+    }
+    
+    func makeResultsMessage() -> String {
+        let formattedDate = statisticService.bestGame.date.dateTimeString
+        return """
+        Ваш результат: \(getCorrectAnswers())/\(questionsAmount)
+        Количество сыгранных квизов: \(statisticService.gamesCount)
+        Рекорд: \(statisticService.bestGame.correct)/\(statisticService.bestGame.total) (\(formattedDate))
+        Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%
+        """
     }
 
     func handleAnswer(answer: Bool) {

@@ -1,6 +1,3 @@
-import Foundation
-import UIKit
-
 protocol MovieQuizViewControllerProtocol: AnyObject {
     func showQuestion(step: QuizStep)
     func showResults(result: QuizResults)
