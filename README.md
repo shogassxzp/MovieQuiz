@@ -1,33 +1,73 @@
-## **MovieQuiz**
+# MovieQuiz
 
-MovieQuiz - это приложение с квизами о фильмах из топ-250 рейтинга и самых популярных фильмах по версии IMDb.
+MovieQuiz is an iOS quiz app about movies from IMDb ratings. The user answers whether a movie rating is higher than the suggested value, completes a 10-question round, and sees personal statistics at the end.
 
-## **Ссылки**
+## Overview
 
-[Макет Figma](https://www.figma.com/file/l0IMG3Eys35fUrbvArtwsR/YP-Quiz?node-id=34%3A243)
+The project was built as a UIKit training app and gradually evolved from a static quiz screen into a network-driven application with separated presentation logic, statistics, error handling, and tests.
 
-[API IMDb](https://imdb-api.com/api#Top250Movies-header)
+## Features
 
-[Шрифты](https://code.s3.yandex.net/Mobile/iOS/Fonts/MovieQuizFonts.zip)
+- Splash screen and main quiz screen
+- 10-question game rounds
+- Questions based on movie ratings
+- Visual feedback for correct and incorrect answers
+- Round result alert with current score
+- Best result, total games count, and average accuracy
+- Network loading of movie data
+- Retry flow when loading fails
+- Unit tests for presenter and movie loading logic
+- UI test target
 
-## **Описание приложения**
+## Tech Stack
 
-- Одностраничное приложение с квизами о фильмах из топ-250 рейтинга и самых популярных фильмов IMDb. Пользователь приложения последовательно отвечает на вопросы о рейтинге фильма. По итогам каждого раунда игры показывается статистика о количестве правильных ответов и лучших результатах пользователя. Цель игры — правильно ответить на все 10 вопросов раунда.
+- Swift
+- UIKit
+- Storyboard + programmatic logic
+- MVP-style presentation layer
+- URLSession
+- XCTest
+- UserDefaults for statistics storage
 
-## **Функциональные требования**
+## Architecture
 
-- При запуске приложения показывается сплеш-скрин;
-- После запуска приложения показывается экран вопроса с текстом вопроса, картинкой и двумя вариантами ответа, “Да” и “Нет”, только один из них правильный;
-- Вопрос квиза составляется относительно IMDb рейтинга фильма по 10-балльной шкале, например: "Рейтинг этого фильма больше 6?";
-- Можно нажать на один из вариантов ответа на вопрос и получить отклик о том, правильный он или нет, при этом рамка фотографии поменяет цвет на соответствующий;
-- После выбора ответа на вопрос через 1 секунду автоматически появляется следующий вопрос;
-- После завершения раунда из 10 вопросов появляется алерт со статистикой пользователя и возможностью сыграть ещё раз;
-- Статистика содержит: результат текущего раунда (количество правильных ответов из 10 вопросов), количество сыгранных квизов, рекорд (лучший результат раунда за сессию, дата и время этого раунда), статистику сыгранных квизов в процентном соотношении (среднюю точность);
-- Пользователь может запустить новый раунд, нажав в алерте на кнопку "Сыграть еще раз";
-- При невозможности загрузить данные пользователь видит алерт с сообщением о том, что что-то пошло не так, а также кнопкой, по нажатию на которую можно повторить сетевой запрос.
+The project separates the screen, business logic, data loading, and statistics:
 
-## **Технические требования**
+- `MovieQuizViewController` renders UI and receives presenter commands.
+- `MovieQuizPresenter` controls quiz state, answer handling, and navigation between questions.
+- `QuestionFactory` prepares quiz questions.
+- `MoviesLoader` and `NetworkClient` load movie data.
+- `StatisticService` stores game statistics.
+- `AlertPresenter` centralizes alert presentation.
 
-- Приложение должно поддерживать устройства iPhone с iOS 15, предусмотрен только портретный режим;
-- Элементы интерфейса адаптируются под разрешения экранов iPhone, начиная с X — вёрстка под SE и iPad не предусмотрена;
-- Экраны соответствует макету — использованы верные шрифты нужных размеров, все надписи находятся на нужном месте, расположение всех элементов, размеры кнопок и отступы — точно такие же, как в макете.
+## Project Structure
+
+```text
+MovieQuiz/
+├── Models/          # Quiz, movie, result, and alert models
+├── Presentation/    # View controller, presenter, alert presenter
+├── Services/        # Network, question factory, statistics
+├── Helpers/         # Extensions and utilities
+├── Mocks/           # Mock questions
+└── Resources/       # Assets, fonts, storyboard resources
+```
+
+## Tests
+
+The repository contains:
+
+- `MovieQuizPresenterTests`
+- `MoviesLoaderTests`
+- `MovieQuizUITests`
+
+Run tests from Xcode with the included test plans.
+
+## Getting Started
+
+1. Open `MovieQuiz.xcodeproj` in Xcode.
+2. Select the `MovieQuiz` scheme.
+3. Run the app on an iPhone simulator.
+
+## Repository
+
+[github.com/shogassxzp/MovieQuiz](https://github.com/shogassxzp/MovieQuiz)
